@@ -36,7 +36,7 @@ bot.onText(/\/start/, (msg) => {
       inline_keyboard: [[
         {
           text: "Открыть панель мониторинга",
-          web_app: {url: 'https://your-render-app.onrender.com'}
+          web_app: {url: 'https://server-ttest.onrender.com/'}
         }
       ]]
     }
