@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IoT Мониторинг</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>IoT Мониторинг</h1>
+        <div class="widget-container">
+            <div class="widget" id="temperature-widget">
+                <h2>Температура</h2>
+                <p class="value" id="temperature">-- °C</p>
+            </div>
+            <div class="widget" id="humidity-widget">
+                <h2>Влажность</h2>
+                <p class="value" id="humidity">-- %</p>
+            </div>
+            <div class="widget" id="vpd-widget">
+                <h2>VPD</h2>
+                <p class="value" id="vpd">-- kPa</p>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
