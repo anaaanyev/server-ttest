@@ -50,6 +50,7 @@ let latestData = {
 };
 
 app.post('/update-data', (req, res) => {
+  console.log('Received data:', req.body);
   latestData = req.body;
   res.send('Data updated');
 });
