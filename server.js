@@ -8,7 +8,36 @@ const port = process.env.PORT || 3000;
 
 // Замените на свой токен
 const token = '7516135527:AAGa-7vUHUSTBvRmuK3JqL2qm_-Mevcni98';
-const bot = new TelegramBot(token, {polling: true});
+let bot;
+
+function connectBot() {
+  bot = new TelegramBot(token, {polling: true});
+
+  bot.on('polling_error', (error) => {
+    console.log('Polling error:', error);
+    if (error.code === 'ETELEGRAM') {
+      console.log('Reconnecting bot...');
+      bot.stopPolling();
+      setTimeout(connectBot, 10000);
+    }
+  });
+
+  bot.onText(/\/start/, (msg) => {
+    const chatId = msg.chat.id;
+    bot.sendMessage(chatId, 'Добро пожаловать! Нажмите кнопку ниже, чтобы открыть панель мониторинга.', {
+      reply_markup: {
+        inline_keyboard: [[
+          {
+            text: "Открыть панель мониторинга",
+            web_app: {url: 'https://server-ttest.onrender.com'}
+          }
+        ]]
+      }
+    });
+  });
+}
+
+connectBot();
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -27,20 +56,6 @@ app.post('/update-data', (req, res) => {
 
 app.get('/get-data', (req, res) => {
   res.json(latestData);
-});
-
-bot.onText(/\/start/, (msg) => {
-  const chatId = msg.chat.id;
-  bot.sendMessage(chatId, 'Добро пожаловать! Нажмите кнопку ниже, чтобы открыть панель мониторинга.', {
-    reply_markup: {
-      inline_keyboard: [[
-        {
-          text: "Открыть панель мониторинга",
-          web_app: {url: 'https://server-ttest.onrender.com/'}
-        }
-      ]]
-    }
-  });
 });
 
 app.listen(port, () => {
